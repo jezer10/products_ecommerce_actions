@@ -2,8 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
-  MatDialogActions,
-  MatDialogClose,
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
@@ -30,14 +28,16 @@ export class SpiderHistoryDialog implements OnInit {
   openItems() {}
   openLogs() {}
   getDataDiff(startDate: string, endDate: string) {
-    const diff = new Date(startDate).getTime() - new Date(endDate).getTime();
+    const diff = new Date(endDate).getTime() - new Date(startDate).getTime();
     const days = Math.floor(diff / (60 * 60 * 24 * 1000));
     const hours = Math.floor(diff / (60 * 60 * 1000)) - days * 24;
     var minutes =
       Math.floor(diff / (60 * 1000)) - (days * 24 * 60 + hours * 60);
-      const seconds =
+    const seconds =
       Math.floor(diff / 1000) -
       (days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60);
-    return `${days ? `${days} Dias, ` : ''}${hours ? `${hours} Horas, ` : ''}${minutes ? `${minutes} Minutos, ` : ''}${seconds ? `${seconds} Segundos.` : ''}`
+    return `${days ? `${days} Dias, ` : ''}${hours ? `${hours} Horas, ` : ''}${
+      minutes ? `${minutes} Minutos, ` : ''
+    }${seconds ? `${seconds} Segundos.` : ''}`;
   }
 }

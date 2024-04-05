@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { SpiderModel } from '../spider-response.interface';
+import { FinishedJob, SpiderModel } from '../spider-response.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { SpiderHistoryDialog } from './components/spider-history-dialog.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -127,6 +127,34 @@ export class ListSpidersComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  getDiff(finishedJob: FinishedJob) {
+    if (finishedJob) {
+      const timeElapsed = this.getDataDiff(
+        finishedJob.end_time,
+        finishedJob.start_time
+      );
+      return {
+        timeElapsed,
+        startTime: finishedJob.start_time,
+        endTime: finishedJob.end_time,
+      };
+    }
+
+    return null;
+  }
+  getDataDiff(startDate: string, endDate: string) {
+    const diff = new Date(startDate).getTime() - new Date(endDate).getTime();
+    const days = Math.floor(diff / (60 * 60 * 24 * 1000));
+    const hours = Math.floor(diff / (60 * 60 * 1000)) - days * 24;
+    var minutes =
+      Math.floor(diff / (60 * 1000)) - (days * 24 * 60 + hours * 60);
+    const seconds =
+      Math.floor(diff / 1000) -
+      (days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60);
+    return `${days ? `${days} Dias, ` : ''}${hours ? `${hours} Horas, ` : ''}${
+      minutes ? `${minutes} Minutos, ` : ''
+    }${seconds ? `${seconds} Segundos.` : ''}`;
+  }
   allComplete: boolean = false;
 
   updateAllComplete() {

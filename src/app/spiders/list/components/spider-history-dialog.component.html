@@ -8,7 +8,7 @@
   <div>
     <span>Tiempo Transcurrido</span>
   </div>
-  {{ getDataDiff(item.end_time, item.start_time) }}
+  {{ getDataDiff(item.start_time, item.end_time) }}
   <div>
     <button mat-button (click)="openItems()">Items</button>
     <button mat-button (click)="openLogs()">Registro</button>

@@ -77,7 +77,7 @@ export class SpidersService {
     });
     return this.http.post<RunSpiderResponse>(
       `${environment.base}/schedule.json`,
-      body,
+      body.toString(),
       {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
