@@ -1,0 +1,62 @@
+<div class="flex flex-col p-4 gap-4">
+  <div>
+    <button mat-icon-button (click)="backToProjects()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+  <div class="flex justify-between">
+    <mat-checkbox
+      [checked]="allComplete"
+      [indeterminate]="someComplete()"
+      (change)="setAll($event.checked)"
+      >Seleccionar Todos</mat-checkbox
+    >
+    <mat-form-field>
+      <mat-select [(ngModel)]="filters">
+        <mat-option [value]="'all'">Todos</mat-option>
+        <mat-option [value]="'selected'">Seleccionado</mat-option>
+        <mat-option [value]="'running'">Ejecutando</mat-option>
+        <mat-option [value]="'pending'">Pendientes</mat-option>
+        <mat-option [value]="'finished'">Finalizados</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>{{ selectedSpiders.length }} de {{ spiders.length }} Scripts</div>
+  <div>
+    <button mat-button (click)="runSpider()">Ejecutar</button>
+  </div>
+  <div class="grid grid-cols-4 gap-4">
+    @for(spider of spiders | filter:filters; track spider.name; let i = $index){
+    <mat-card>
+      <mat-card-content>
+        <div class="flex items-center gap-4">
+          <mat-checkbox
+            [(ngModel)]="spider.selected"
+            (ngModelChange)="updateAllComplete()"
+            >{{ spider.name }}</mat-checkbox
+          >
+          <div>
+            @if(spider.running.length > 0){
+            <span class="px-4 py-2 bg-green-500 text-white rounded text-xs"
+              >Ejecutando</span
+            >
+            } @if(spider.pending.length > 0){
+            <span class="px-4 py-2 bg-blue-500 text-white rounded text-xs"
+              >Pendiente</span
+            >
+            }
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="showHistory(i)">
+          Historial ({{ spider.finished.length }})
+        </button>
+        <button mat-button (click)="showLogs()">Mostrar Registros</button>
+      </mat-card-actions>
+    </mat-card>
+    } @empty {
+      "No hay scripts disponibles."
+    }
+  </div>
+</div>

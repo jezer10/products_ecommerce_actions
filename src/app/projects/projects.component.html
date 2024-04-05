@@ -1,0 +1,12 @@
+<div class="grid grid-cols-2 gap-4 p-4">
+  @for(project of projects; track project){
+  <mat-card>
+    <mat-card-content>
+      <h2>{{ project }}</h2>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button (click)="showSpiders(project)">Ver Scripts</button>
+    </mat-card-actions>
+  </mat-card>
+  }
+</div>
