@@ -1,12 +1,15 @@
-<div class="grid grid-cols-2 gap-4 p-4">
-  @for(project of projects; track project){
-  <mat-card>
-    <mat-card-content>
-      <h2>{{ project }}</h2>
-    </mat-card-content>
-    <mat-card-actions>
+<div class="p-4 flex flex-col gap-4">
+  <h1>Proyectos</h1>
+  <div class="grid grid-cols-2 gap-4 ">
+    @for(project of projects; track project){
+    <mat-card>
+      <mat-card-content>
+        <h2>{{ project }}</h2>
+      </mat-card-content>
+      <mat-card-actions>
         <button mat-button (click)="showSpiders(project)">Ver Scripts</button>
-    </mat-card-actions>
-  </mat-card>
-  }
+      </mat-card-actions>
+    </mat-card>
+    }
+  </div>
 </div>
